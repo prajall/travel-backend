@@ -46,7 +46,6 @@ const CompanySchema: Schema = new Schema(
   { timestamps: true }
 );
 
-// Create Mongoose Model
 const Company = mongoose.model<ICompany>("Company", CompanySchema);
 
 export default Company;
