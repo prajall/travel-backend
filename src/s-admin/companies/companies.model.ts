@@ -38,6 +38,10 @@ const CompanySchema: Schema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Plan",
     },
+    duration: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
