@@ -14,7 +14,7 @@ const router = express.Router();
 router.post("/", companyValidation, handleValidation, createCompany);
 router.get("/", getAllCompanies);
 router.get("/:id", getCompanyById);
-router.put("/:id", companyValidation, handleValidation, updateCompany);
+router.put("/:id", updateCompany);
 router.delete("/:id", deleteCompany);
 
 export default router;

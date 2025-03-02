@@ -84,31 +84,3 @@ export const getUserInfo = async (req: Request, res: Response) => {
     return res.status(400).json({ message: err.message });
   }
 };
-
-// export const login = async (req: Request, res: Response) => {
-//   const { email, password } = req.body;
-
-//   try {
-//     const user = await User.findOne({ email });
-
-//     if (!user) {
-//       return apiError(res, 404, "User not found");
-//     }
-//     // return apiResponse(res, 200, "User logged in successfully", user);
-//     res
-//       .status(200)
-//       .cookie("token", token, {
-//         httpOnly: true,
-//         secure: process.env.NODE_ENV === "production",
-//         expires: new Date(Date.now() + 2592000000),
-//       })
-//       .json({
-//         success: true,
-//         message: "User Logged In Successfully",
-//         // user: filteredUser,
-//       });
-//     return;
-//   } catch (error) {
-//     return apiError(res, 500, "Error logging in user", error);
-//   }
-// };

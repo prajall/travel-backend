@@ -17,7 +17,6 @@ const CompanySchema: Schema = new Schema(
     },
     password: {
       type: String,
-      required: true,
     },
     modulesEnabled: {
       type: [],
@@ -30,6 +29,10 @@ const CompanySchema: Schema = new Schema(
     duration: {
       type: Number,
       default: 0,
+    },
+    emailVerified: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

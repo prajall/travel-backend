@@ -1,14 +1,18 @@
 import { Request, Response } from "express";
 import Company from "./company.model.ts";
+import { User } from "../user/user.model.ts";
 import { apiResponse, apiError } from "../../utils/response.util.ts";
 
 export const createCompany = async (req: Request, res: Response) => {
   try {
     const { name, email, password, modulesEnabled, plan, duration } = req.body;
+    const user = await Company.findOne({ email });
+    if (user) {
+      return apiError(res, 400, "Company with this email already exists");
+    }
     const company = await Company.create({
       name,
       email,
-      password,
       modulesEnabled,
       plan,
       duration,

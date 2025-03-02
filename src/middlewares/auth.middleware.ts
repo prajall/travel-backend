@@ -37,3 +37,26 @@ export const authValidation = async (
     return apiError(res, 401, "Invalid or expired token", error.message);
   }
 };
+
+export const superAdminValidation = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = (req as any).user;
+    if (!user) {
+      return apiError(res, 404, "User not found");
+    }
+    if (user.email !== "msoft.etc@gmail.com") {
+      return apiError(
+        res,
+        403,
+        "You are not authorized to perform this action"
+      );
+    }
+    next();
+  } catch (error: any) {
+    return apiError(res, 500, "Internal Server Error", error);
+  }
+};
