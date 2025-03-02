@@ -1,16 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-// Interface for TypeScript
-export interface ICompany extends Document {
-  name: string;
-  adminEmail: string;
-  adminPassword: string;
-  modulesEnabled: string[];
-  plan: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 // Mongoose Schema
 const CompanySchema: Schema = new Schema(
   {
@@ -49,3 +38,14 @@ const CompanySchema: Schema = new Schema(
 const Company = mongoose.model<ICompany>("Company", CompanySchema);
 
 export default Company;
+
+// Interface for TypeScript
+export interface ICompany extends Document {
+  name: string;
+  adminEmail: string;
+  adminPassword: string;
+  modulesEnabled: string[];
+  plan: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
