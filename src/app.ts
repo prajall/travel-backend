@@ -1,6 +1,11 @@
 import express from "express";
 import companyRoutes from "./s-admin/company/company.route.ts";
 import userRoutes from "./s-admin/user/user.route.ts";
+import pricingRoutes from "./s-admin/pricing/pricing.route.ts";
+import {
+  authValidation,
+  superAdminValidation,
+} from "./middlewares/auth.middleware.ts";
 
 const app = express();
 
@@ -13,7 +18,8 @@ app.get("/", (req, res) => {
 });
 
 //routes
-app.use("/company", companyRoutes);
-app.use("/user", userRoutes);
+app.use("/company", authValidation, superAdminValidation, companyRoutes);
+app.use("/user", authValidation, superAdminValidation, userRoutes);
+app.use("/pricing", authValidation, superAdminValidation, pricingRoutes);
 
 export default app;
