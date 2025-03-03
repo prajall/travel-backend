@@ -18,8 +18,8 @@ app.get("/", (req, res) => {
 });
 
 //routes
-app.use("/company", authValidation, superAdminValidation, companyRoutes);
-app.use("/user", authValidation, superAdminValidation, userRoutes);
-app.use("/pricing", authValidation, superAdminValidation, pricingRoutes);
+app.use("/company", companyRoutes);
+app.use("/user", userRoutes);
+app.use("/pricing", pricingRoutes);
 
 export default app;

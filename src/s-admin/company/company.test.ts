@@ -24,7 +24,10 @@ describe("Company API Endpoints", () => {
       name: "Test Company",
       email: "testcompany@example.com",
       password: "securePass123",
+      modulesEnabled: [],
     });
+
+    console.log(res.body);
 
     expect(res.statusCode).toBe(201);
     expect(res.body.success).toBe(true);

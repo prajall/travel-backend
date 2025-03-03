@@ -14,7 +14,7 @@ const router = express.Router();
 router.post("/", validatePricing, handleValidation, createPricing);
 router.get("/", getAllPricings);
 router.get("/:id", getPricingById);
-router.put("/:id", validatePricing, handleValidation, updatePricing);
+router.put("/:id", updatePricing);
 router.delete("/:id", deletePricing);
 
 export default router;
