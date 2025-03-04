@@ -2,6 +2,7 @@ import express from "express";
 import companyRoutes from "./s-admin/company/company.route.ts";
 import userRoutes from "./s-admin/user/user.route.ts";
 import pricingRoutes from "./s-admin/pricing/pricing.route.ts";
+import moduleRoutes from "./s-admin/module/module.route.ts";
 import {
   authValidation,
   superAdminValidation,
@@ -17,9 +18,10 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "Server is working!" });
 });
 
-//routes
-app.use("/company", companyRoutes);
-app.use("/user", userRoutes);
-app.use("/pricing", pricingRoutes);
+//s-admin routes
+app.use("/s-admin/company", companyRoutes);
+app.use("/s-admin/user", userRoutes);
+app.use("/s-admin/pricing", pricingRoutes);
+app.use("/s-admin/module", moduleRoutes);
 
 export default app;

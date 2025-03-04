@@ -18,7 +18,7 @@ describe("Pricing API Endpoints", () => {
 
   it("should create a new pricing plan", async () => {
     const res = await request(app)
-      .post("/pricing")
+      .post("/s-admin/pricing")
       .send({
         title: "Pro Plan",
         subTitle: "Advanced features for professionals",
@@ -38,7 +38,7 @@ describe("Pricing API Endpoints", () => {
   });
 
   it("should fail to create a pricing plan with missing fields", async () => {
-    const res = await request(app).post("/pricing").send({
+    const res = await request(app).post("/s-admin/pricing").send({
       title: "",
       pricingType: "monthly",
     });
@@ -49,7 +49,7 @@ describe("Pricing API Endpoints", () => {
   });
 
   it("should fetch all pricing plans", async () => {
-    const res = await request(app).get("/pricing");
+    const res = await request(app).get("/s-admin/pricing");
 
     expect(res.statusCode).toBe(200);
     expect(res.body.success).toBe(true);
@@ -58,7 +58,7 @@ describe("Pricing API Endpoints", () => {
 
   /** ✅ GET SINGLE PRICING PLAN */
   it("should fetch a single pricing plan by ID", async () => {
-    const res = await request(app).get(`/pricing/${testPlanId}`);
+    const res = await request(app).get(`/s-admin/pricing/${testPlanId}`);
 
     expect(res.statusCode).toBe(200);
     expect(res.body.success).toBe(true);
@@ -66,7 +66,9 @@ describe("Pricing API Endpoints", () => {
   });
 
   it("should return 404 for a non-existent pricing plan", async () => {
-    const res = await request(app).get(`/pricing/655555555555555555555555`);
+    const res = await request(app).get(
+      `/s-admin/pricing/655555555555555555555555`
+    );
 
     expect(res.statusCode).toBe(404);
     expect(res.body.success).toBe(false);
@@ -74,7 +76,7 @@ describe("Pricing API Endpoints", () => {
   });
 
   it("should update a pricing plan", async () => {
-    const res = await request(app).put(`/pricing/${testPlanId}`).send({
+    const res = await request(app).put(`/s-admin/pricing/${testPlanId}`).send({
       title: "Updated Plan",
       price: 39.99,
     });
@@ -87,7 +89,7 @@ describe("Pricing API Endpoints", () => {
 
   it("should return 404 for updating a non-existent pricing plan", async () => {
     const res = await request(app)
-      .put(`/pricing/655555555555555555555555`)
+      .put(`/s-admin/pricing/655555555555555555555555`)
       .send({
         title: "Non-Existent Plan",
       });
@@ -98,7 +100,7 @@ describe("Pricing API Endpoints", () => {
   });
 
   it("should delete a pricing plan", async () => {
-    const res = await request(app).delete(`/pricing/${testPlanId}`);
+    const res = await request(app).delete(`/s-admin/pricing/${testPlanId}`);
 
     expect(res.statusCode).toBe(200);
     expect(res.body.success).toBe(true);
@@ -106,7 +108,7 @@ describe("Pricing API Endpoints", () => {
   });
 
   it("should return 404 for deleting a non-existent pricing plan", async () => {
-    const res = await request(app).delete(`/pricing/${testPlanId}`);
+    const res = await request(app).delete(`/s-admin/pricing/${testPlanId}`);
 
     expect(res.statusCode).toBe(404);
     expect(res.body.success).toBe(false);
