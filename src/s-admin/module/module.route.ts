@@ -5,6 +5,7 @@ import {
   getModuleById,
   updateModule,
   deleteModule,
+  createMultipleModules,
 } from "./module.controller.ts";
 import { validateModule } from "./module.validation.ts";
 import { handleValidation } from "../../middlewares/validation.middleware.ts";
@@ -17,5 +18,7 @@ router.get("/", getAllModules);
 router.get("/:id", getModuleById);
 router.put("/:id", updateModule);
 router.delete("/:id", deleteModule);
+
+// router.post("/multi", createMultipleModules);
 
 export default router;

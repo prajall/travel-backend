@@ -18,18 +18,18 @@ const CompanySchema: Schema = new Schema(
     password: {
       type: String,
     },
-    modulesEnabled: {
-      type: [],
-      default: [],
-    },
-    plan: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Plan",
-    },
-    duration: {
-      type: Number,
-      default: 0,
-    },
+    // modulesEnabled: {
+    //   type: [],
+    //   default: [],
+    // },
+    // plan: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Plan",
+    // },
+    // duration: {
+    //   type: Number,
+    //   default: 0,
+    // },
     emailVerified: {
       type: Boolean,
       default: false,

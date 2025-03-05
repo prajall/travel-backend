@@ -1,7 +1,7 @@
 import express from "express";
 import companyRoutes from "./s-admin/company/company.route.ts";
 import userRoutes from "./s-admin/user/user.route.ts";
-import pricingRoutes from "./s-admin/pricing/pricing.route.ts";
+import planRoutes from "./s-admin/plan/plan.route.ts";
 import moduleRoutes from "./s-admin/module/module.route.ts";
 import {
   authValidation,
@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 //s-admin routes
 app.use("/s-admin/company", companyRoutes);
 app.use("/s-admin/user", userRoutes);
-app.use("/s-admin/pricing", pricingRoutes);
+app.use("/s-admin/plan", planRoutes);
 app.use("/s-admin/module", moduleRoutes);
 
 export default app;

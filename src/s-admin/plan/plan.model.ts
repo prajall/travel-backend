@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface IPricing extends Document {
+export interface IPlan extends Document {
   title: string;
   modules: string[];
   pricingType: "yearly" | "monthly" | "lifetime" | "custom";
@@ -15,7 +15,7 @@ export interface IPricing extends Document {
   isActive: boolean;
 }
 
-const PricingSchema: Schema = new Schema(
+const PlanSchema: Schema = new Schema(
   {
     title: { type: String, required: true, trim: true },
 
@@ -29,7 +29,7 @@ const PricingSchema: Schema = new Schema(
       required: true,
     },
 
-    pricingType: {
+    planType: {
       type: String,
       enum: ["yearly", "monthly", "lifetime", "custom"],
       required: true,
@@ -58,5 +58,5 @@ const PricingSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-const Plan = mongoose.model<IPricing>("Plan", PricingSchema);
+const Plan = mongoose.model<IPlan>("Plan", PlanSchema);
 export default Plan;

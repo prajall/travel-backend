@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-export const validatePricing = [
+export const validatePlan = [
   body("title")
     .notEmpty()
     .withMessage("Title is required")

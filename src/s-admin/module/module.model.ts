@@ -14,9 +14,9 @@ const ModuleSchema: Schema = new Schema(
 
     description: { type: String, trim: true },
 
-    type: {
+    moduleType: {
       type: String,
-      enum: ["free", "premium"],
+      enum: ["free", "premium", "addOns"],
       required: true,
     },
 
