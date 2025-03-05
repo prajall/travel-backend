@@ -3,12 +3,11 @@ import mongoose from "mongoose";
 import CompanyPlan from "./company-plan.model.ts";
 import { apiResponse, apiError } from "../../utils/response.util.ts";
 
-/** ✅ CREATE A NEW COMPANY PLAN */
 export const createCompanyPlan = async (req: Request, res: Response) => {
   try {
     const {
-      companyId,
-      planId,
+      company,
+      plan,
       startDate,
       endDate,
       duration,
@@ -19,10 +18,11 @@ export const createCompanyPlan = async (req: Request, res: Response) => {
       lastPaymentId,
     } = req.body;
 
-    // Create new company subscription plan
+    // if company is already subscribed then reduce the pricing / ask to cancel /
+
     const newPlan = await CompanyPlan.create({
-      companyId,
-      planId,
+      company,
+      plan,
       startDate,
       endDate,
       duration,
@@ -39,10 +39,9 @@ export const createCompanyPlan = async (req: Request, res: Response) => {
   }
 };
 
-/** ✅ GET ALL COMPANY PLANS */
 export const getAllCompanyPlans = async (req: Request, res: Response) => {
   try {
-    const plans = await CompanyPlan.find().populate("companyId planId");
+    const plans = await CompanyPlan.find().populate("company plan");
 
     return apiResponse(res, 200, "Company plans retrieved successfully", plans);
   } catch (error) {
@@ -50,7 +49,6 @@ export const getAllCompanyPlans = async (req: Request, res: Response) => {
   }
 };
 
-/** ✅ GET COMPANY PLAN BY ID */
 export const getCompanyPlanById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -59,7 +57,7 @@ export const getCompanyPlanById = async (req: Request, res: Response) => {
       return apiError(res, 400, "Invalid company plan ID format");
     }
 
-    const plan = await CompanyPlan.findById(id).populate("companyId planId");
+    const plan = await CompanyPlan.findById(id).populate("company plan");
 
     if (!plan) return apiError(res, 404, "Company plan not found");
 
@@ -69,7 +67,6 @@ export const getCompanyPlanById = async (req: Request, res: Response) => {
   }
 };
 
-/** ✅ UPDATE COMPANY PLAN */
 export const updateCompanyPlan = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -95,7 +92,6 @@ export const updateCompanyPlan = async (req: Request, res: Response) => {
   }
 };
 
-/** ✅ DELETE COMPANY PLAN */
 export const deleteCompanyPlan = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

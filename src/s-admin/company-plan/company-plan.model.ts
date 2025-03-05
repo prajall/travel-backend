@@ -15,12 +15,12 @@ export interface ICompanyPlan extends Document {
 
 const CompanyPlanSchema: Schema = new Schema(
   {
-    companyId: {
+    company: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
       required: true,
     },
-    planId: {
+    plan: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Plan",
       required: true,

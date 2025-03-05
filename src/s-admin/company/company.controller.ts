@@ -6,8 +6,8 @@ import { apiResponse, apiError } from "../../utils/response.util.ts";
 export const createCompany = async (req: Request, res: Response) => {
   try {
     const { name, email } = req.body;
-    const user = await Company.findOne({ email });
-    if (user) {
+    const companyExist = await Company.findOne({ email });
+    if (companyExist) {
       return apiError(res, 400, "Company with this email already exists");
     }
     const company = await Company.create({
