@@ -6,14 +6,6 @@ import { RoleProp } from "./typess";
 declare module "express-serve-static-core" {
   interface Request {
     user?: any;
-    employee: {
-      _id: Types.ObjectId;
-      user: {
-        email: string;
-        _id: Types.ObjectId;
-      };
-      name: string;
-      role: RoleProp;
-    };
+    company?: any;
   }
 }

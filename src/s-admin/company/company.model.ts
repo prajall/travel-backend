@@ -44,6 +44,7 @@ export default Company;
 
 // Interface for TypeScript
 export interface ICompany extends Document {
+  _id: mongoose.Types.ObjectId | string;
   name: string;
   adminEmail: string;
   adminPassword: string;

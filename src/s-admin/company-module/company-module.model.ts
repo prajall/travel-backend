@@ -1,46 +1,41 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface ICompanyPlan extends Document {
+export interface ICompanyModule extends Document {
   companyId: mongoose.Types.ObjectId;
-  planId: mongoose.Types.ObjectId;
+  moduleId: mongoose.Types.ObjectId;
   startDate: Date;
   endDate: Date;
   duration: number;
-  pricingType: "yearly" | "monthly" | "lifetime";
-  autoRenew: boolean;
   status: "active" | "expired" | "canceled";
   paymentStatus: "paid" | "pending" | "failed";
-  lastPaymentId?: string;
 }
 
-const CompanyPlanSchema: Schema = new Schema(
+const CompanyModuleSchema: Schema = new Schema(
   {
-    company: {
+    companyId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
       required: true,
     },
-    plan: {
+    moduleId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Plan",
+      ref: "Module",
       required: true,
     },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     duration: { type: Number, required: true },
-    autoRenew: { type: Boolean, default: true },
     status: {
       type: String,
       enum: ["active", "inactive", "expired", "canceled"],
       default: "inactive",
     },
-    lastPaymentId: { type: String },
   },
   { timestamps: true }
 );
 
-const CompanyPlan = mongoose.model<ICompanyPlan>(
-  "CompanyPlan",
-  CompanyPlanSchema
+const CompanyModule = mongoose.model<ICompanyModule>(
+  "CompanyModule",
+  CompanyModuleSchema
 );
-export default CompanyPlan;
+export default CompanyModule;

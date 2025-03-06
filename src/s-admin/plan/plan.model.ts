@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IPlan extends Document {
+  _id: mongoose.Types.ObjectId | string;
   title: string;
   modules: string[];
   pricingType: "yearly" | "monthly" | "lifetime" | "custom";

@@ -3,6 +3,8 @@ import companyRoutes from "./s-admin/company/company.route.ts";
 import userRoutes from "./s-admin/user/user.route.ts";
 import planRoutes from "./s-admin/plan/plan.route.ts";
 import moduleRoutes from "./s-admin/module/module.route.ts";
+import companyPlanRoutes from "./s-admin/company-plan/company-plan.route.ts";
+
 import {
   authValidation,
   superAdminValidation,
@@ -23,5 +25,6 @@ app.use("/s-admin/company", companyRoutes);
 app.use("/s-admin/user", userRoutes);
 app.use("/s-admin/plan", planRoutes);
 app.use("/s-admin/module", moduleRoutes);
+app.use("/s-admin/company-plans", companyPlanRoutes);
 
 export default app;
