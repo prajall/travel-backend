@@ -14,7 +14,7 @@ export const validatePlan = [
 
   body("modules.*").isString().withMessage("Each module must be a string"),
 
-  body("pricingType")
+  body("planType")
     .notEmpty()
     .withMessage("Pricing type is required")
     .isIn(["yearly", "monthly", "lifetime", "custom"])

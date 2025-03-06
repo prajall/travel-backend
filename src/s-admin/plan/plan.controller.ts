@@ -36,7 +36,10 @@ export const createPlan = async (req: Request, res: Response) => {
 
 export const getAllPlans = async (req: Request, res: Response) => {
   try {
-    const plans = await Plan.find();
+    const plans = await Plan.find().populate({
+      path: "modules",
+      select: "name description moduletype isActive",
+    });
     return apiResponse(res, 200, "Plans retrieved successfully", plans);
   } catch (error) {
     return apiError(res, 500, "Error fetching Plans", error);

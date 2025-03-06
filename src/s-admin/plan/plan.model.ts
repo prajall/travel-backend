@@ -25,17 +25,18 @@ const PlanSchema: Schema = new Schema(
       trim: true,
     },
 
-    modules: {
-      type: [String],
-      required: true,
-    },
+    modules: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Module",
+      },
+    ],
 
     planType: {
       type: String,
       enum: ["yearly", "monthly", "lifetime", "custom"],
       required: true,
     },
-
     price: {
       type: Number,
       required: true,
