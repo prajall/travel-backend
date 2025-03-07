@@ -34,7 +34,10 @@ const CompanyPlanSchema: Schema = new Schema(
       enum: ["active", "inactive", "expired", "canceled"],
       default: "inactive",
     },
-    lastPaymentId: { type: String },
+    billingId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "PlanBilling",
+    },
   },
   { timestamps: true }
 );

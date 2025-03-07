@@ -1,19 +1,17 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface IPlan extends Document {
-  _id: mongoose.Types.ObjectId | string;
   title: string;
-  modules: string[];
-  pricingType: "yearly" | "monthly" | "lifetime" | "custom";
+  subTitle?: string;
+  modules: Types.ObjectId[];
+  planType: "yearly" | "monthly" | "lifetime" | "custom";
   price: number;
-  //   currency: string;
-  isFreeTrialEnabled: boolean;
-  //   freeTrialDurationType?: "days" | "weeks" | "months";
-  freeTrialDuration?: number;
-  isFeatureBasedPricing: boolean;
-  maxUsers?: number;
-  maxStorage?: number;
-  isActive: boolean;
+  discount?: number;
+  isFreeTrialEnabled?: boolean;
+  freeTrialDuration?: number; // in days
+  isActive?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const PlanSchema: Schema = new Schema(

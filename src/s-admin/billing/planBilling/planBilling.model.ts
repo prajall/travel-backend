@@ -31,11 +31,11 @@ const PlanBillingSchema: Schema = new Schema(
         ref: "Module",
       },
     ],
-    moduleNames: [
-      {
-        type: String,
-      },
-    ],
+    // moduleNames: [
+    //   {
+    //     type: String,
+    //   },
+    // ],
     amount: { type: Number, required: true },
     currency: { type: String, default: "RS" },
     paymentMethod: {
