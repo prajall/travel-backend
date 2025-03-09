@@ -24,7 +24,18 @@ export const createCompanyPlan = async (req: Request, res: Response) => {
       invoiceUrl,
     } = req.body;
 
-    // if company is already subscribed then reduce the pricing / ask to cancel /
+    // if company is already subscribed then return error
+    const existingPlan = await CompanyPlan.findOne({
+      company,
+      plan,
+      status: "active",
+    });
+
+    if (existingPlan) {
+      return apiError(res, 400, "Company is already subscribed to a plan");
+    }
+
+    console.log("Body:", req.body);
 
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -35,7 +46,7 @@ export const createCompanyPlan = async (req: Request, res: Response) => {
         return apiError(res, 404, "Plan not found");
       }
 
-      const [newBilling] = await PlanBilling.create(
+      const newBilling = await PlanBilling.create(
         {
           company,
           plan,
@@ -43,12 +54,14 @@ export const createCompanyPlan = async (req: Request, res: Response) => {
           amount: paidAmount,
           currency,
           paymentMethod,
-          transactionId,
-          invoiceUrl,
+          transactionId: transactionId,
+          invoiceUrl: invoiceUrl,
           status: "paid",
-        },
-        { session }
+        }
+        // { session }
       );
+
+      console.log("New Billing Created", newBilling);
 
       if (!newBilling) {
         return apiError(res, 500, "Failed to create Billing");
@@ -56,7 +69,7 @@ export const createCompanyPlan = async (req: Request, res: Response) => {
 
       const { duration, endDate } = calcPlanTime(planDoc, startDate);
 
-      const [newCompanyPlan] = await CompanyPlan.create(
+      const newCompanyPlan = await CompanyPlan.create(
         {
           company,
           plan,
@@ -66,9 +79,11 @@ export const createCompanyPlan = async (req: Request, res: Response) => {
           autoRenew,
           status: newBilling.status == "paid" ? "active" : "inactive",
           billingId: newBilling._id,
-        },
-        { session }
+        }
+        // { session }
       );
+
+      console.log("New Company Plan Created", newCompanyPlan);
 
       if (!newCompanyPlan) {
         return apiError(res, 500, "Failed to create Company Plan");
@@ -84,9 +99,11 @@ export const createCompanyPlan = async (req: Request, res: Response) => {
       }));
 
       const newCompanyModules = await CompanyModule.insertMany(
-        mockCompanyModules,
-        { session }
+        mockCompanyModules
+        // { session }
       );
+
+      console.log("New Company Modules Created", newCompanyModules);
 
       await session.commitTransaction();
       session.endSession();

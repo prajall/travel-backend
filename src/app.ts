@@ -25,6 +25,6 @@ app.use("/s-admin/company", companyRoutes);
 app.use("/s-admin/user", userRoutes);
 app.use("/s-admin/plan", planRoutes);
 app.use("/s-admin/module", moduleRoutes);
-app.use("/s-admin/company-plans", companyPlanRoutes);
+app.use("/s-admin/company-plan", companyPlanRoutes);
 
 export default app;

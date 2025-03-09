@@ -20,46 +20,40 @@ export const validateCompanyPlan = [
     .toDate()
     .withMessage("Start date must be a valid date"),
 
-  body("endDate")
-    .notEmpty()
-    .withMessage("End date is required")
-    .isISO8601()
-    .toDate()
-    .withMessage("End date must be a valid date"),
-
-  body("duration")
-    .notEmpty()
-    .withMessage("Duration is required")
-    .isInt({ min: 1 })
-    .withMessage("Duration must be a positive number"),
-
-  body("pricingType")
-    .notEmpty()
-    .withMessage("Pricing type is required")
-    .isIn(["yearly", "monthly", "lifetime"])
-    .withMessage(
-      "Invalid pricing type, must be 'yearly', 'monthly', or 'lifetime'"
-    ),
-
   body("autoRenew")
     .optional()
     .isBoolean()
     .withMessage("Auto-renew must be a boolean"),
 
   body("status")
-    .optional()
-    .isIn(["active", "expired", "canceled"])
-    .withMessage("Invalid status, must be 'active', 'expired', or 'canceled'"),
+    .notEmpty()
+    .withMessage("Status is required")
+    .isIn(["active", "inactive"])
+    .withMessage("Invalid status, must be 'active' or 'inactive'"),
 
-  body("paymentStatus")
-    .optional()
-    .isIn(["paid", "pending", "failed"])
+  body("paidAmount")
+    .notEmpty()
+    .withMessage("Paid amount is required")
+    .isFloat({ gt: 0 })
+    .withMessage("Paid amount must be a positive number"),
+
+  body("currency")
+    .notEmpty()
+    .withMessage("Currency is required")
+    .isString()
+    .withMessage("Currency must be a string"),
+
+  body("paymentMethod")
+    .notEmpty()
+    .withMessage("Payment method is required")
+    .isIn(["esewa", "bankTransfer", "manual"])
     .withMessage(
-      "Invalid payment status, must be 'paid', 'pending', or 'failed'"
+      "Invalid payment method, must be 'esewa', 'bankTransfer', or 'manual'"
     ),
 
-  body("lastPaymentId")
-    .optional()
+  body("transactionId")
+    .notEmpty()
+    .withMessage("Transaction ID is required")
     .isString()
-    .withMessage("Last payment ID must be a string"),
+    .withMessage("Transaction ID must be a string"),
 ];
