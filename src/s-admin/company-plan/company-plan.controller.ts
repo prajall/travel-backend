@@ -2,9 +2,12 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 import CompanyPlan from "./company-plan.model.ts";
 import { apiResponse, apiError } from "../../utils/response.util.ts";
-import PlanBilling from "../billing/planBilling/planBilling.model.ts";
+import PlanBilling, {
+  IPlanBilling,
+} from "../billing/planBilling/planBilling.model.ts";
 import Plan, { IPlan } from "../plan/plan.model.ts";
 import { calcPlanTime } from "./company-plan.function.ts";
+import CompanyModule from "../company-module/company-module.model.ts";
 
 export const createCompanyPlan = async (req: Request, res: Response) => {
   try {
@@ -32,30 +35,58 @@ export const createCompanyPlan = async (req: Request, res: Response) => {
         return apiError(res, 404, "Plan not found");
       }
 
-      const newBilling = await PlanBilling.create({
-        company,
-        plan,
-        modules: planDoc.modules,
-        amount: paidAmount,
-        currency,
-        paymentMethod,
-        transactionId,
-        invoiceUrl,
-        status: "paid",
-      });
+      const [newBilling] = await PlanBilling.create(
+        {
+          company,
+          plan,
+          modules: planDoc.modules,
+          amount: paidAmount,
+          currency,
+          paymentMethod,
+          transactionId,
+          invoiceUrl,
+          status: "paid",
+        },
+        { session }
+      );
+
+      if (!newBilling) {
+        return apiError(res, 500, "Failed to create Billing");
+      }
 
       const { duration, endDate } = calcPlanTime(planDoc, startDate);
 
-      const newCompanyPlan = await CompanyPlan.create({
-        company,
-        plan,
+      const [newCompanyPlan] = await CompanyPlan.create(
+        {
+          company,
+          plan,
+          startDate,
+          duration,
+          endDate,
+          autoRenew,
+          status: newBilling.status == "paid" ? "active" : "inactive",
+          billingId: newBilling._id,
+        },
+        { session }
+      );
+
+      if (!newCompanyPlan) {
+        return apiError(res, 500, "Failed to create Company Plan");
+      }
+
+      const mockCompanyModules = planDoc.modules.map((module) => ({
+        company: company,
+        module: module,
         startDate,
-        duration,
         endDate,
-        autoRenew,
-        status: newBilling.status == "paid" ? "active" : "inactive",
-        billingId: newBilling._id,
-      });
+        duration,
+        status: newCompanyPlan.status,
+      }));
+
+      const newCompanyModules = await CompanyModule.insertMany(
+        mockCompanyModules,
+        { session }
+      );
 
       await session.commitTransaction();
       session.endSession();

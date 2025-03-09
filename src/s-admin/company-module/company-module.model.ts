@@ -12,12 +12,12 @@ export interface ICompanyModule extends Document {
 
 const CompanyModuleSchema: Schema = new Schema(
   {
-    companyId: {
+    company: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
       required: true,
     },
-    moduleId: {
+    module: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Module",
       required: true,
