@@ -56,6 +56,34 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 };
 
+export const signupUser = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return apiError(res, 400, "Email is already in use");
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create new user
+    const newUser = await User.create({
+      email,
+      password: hashedPassword,
+    });
+
+    return apiResponse(res, 201, "User registered successfully", {
+      id: newUser._id,
+      email: newUser.email,
+    });
+  } catch (error) {
+    return apiError(res, 500, "Error registering user", error);
+  }
+};
+
 export const getUserInfo = async (req: Request, res: Response) => {
   const user = req.user;
   console.log("Auth user:", user);
