@@ -12,6 +12,7 @@ import { handleValidation } from "../../middlewares/validation.middleware.ts";
 const router = express.Router();
 
 router.post("/", validateCompanyPlan, handleValidation, createCompanyPlan);
+router.post("/", createCompanyPlan);
 router.get("/", getAllCompanyPlans);
 router.get("/:id", getCompanyPlanById);
 router.put("/:id", updateCompanyPlan);

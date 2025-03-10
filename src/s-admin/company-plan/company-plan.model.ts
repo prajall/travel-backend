@@ -28,7 +28,7 @@ const CompanyPlanSchema: Schema = new Schema(
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     duration: { type: Number, required: true },
-    autoRenew: { type: Boolean, default: true },
+    autoRenew: { type: Boolean },
     status: {
       type: String,
       enum: ["active", "inactive", "expired", "canceled"],
@@ -38,6 +38,7 @@ const CompanyPlanSchema: Schema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "PlanBilling",
     },
+    isFreeTrial: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

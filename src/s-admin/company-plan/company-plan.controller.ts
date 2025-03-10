@@ -67,7 +67,7 @@ export const createCompanyPlan = async (req: Request, res: Response) => {
         return apiError(res, 500, "Failed to create Billing");
       }
 
-      const { duration, endDate } = calcPlanTime(planDoc, startDate);
+      const { duration, endDate } = calcPlanTime(planDoc, startDate, false);
 
       const newCompanyPlan = await CompanyPlan.create(
         {
@@ -107,6 +107,97 @@ export const createCompanyPlan = async (req: Request, res: Response) => {
 
       await session.commitTransaction();
       session.endSession();
+      return apiResponse(
+        res,
+        201,
+        "Company plan created successfully",
+        newCompanyPlan
+      );
+    } catch (err) {
+      console.error("Error Creating Company Plan");
+      session.abortTransaction();
+      session.endSession();
+      return apiError(res, 500, "Error creating company plan", err);
+    }
+  } catch (error) {
+    return apiError(res, 500, "Error creating company plan", error);
+  }
+};
+
+export const createCompanyFreeTrial = async (req: Request, res: Response) => {
+  try {
+    const { company, plan, startDate = new Date() } = req.body;
+
+    // if company is already subscribed then return error
+    const existingPlan = await CompanyPlan.findOne({
+      company,
+      plan,
+      status: "active",
+    });
+
+    if (existingPlan) {
+      return apiError(res, 400, "Company is already subscribed to a plan");
+    }
+
+    const freePlanUsed = await CompanyPlan.findOne({
+      company,
+      plan,
+      freetrial: true,
+    });
+
+    if (freePlanUsed) {
+      return apiError(res, 400, "Company has already used the free trial");
+    }
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    try {
+      const planDoc: IPlan | null = await Plan.findById(plan);
+
+      if (!planDoc) {
+        return apiError(res, 404, "Plan not found");
+      }
+
+      const { duration, endDate } = calcPlanTime(planDoc, startDate, true);
+
+      const [newCompanyPlan] = await CompanyPlan.create(
+        {
+          company,
+          plan,
+          startDate,
+          duration,
+          endDate,
+          status: "active",
+          isFreeTrial: true,
+        },
+        { session }
+      );
+
+      console.log("New Company Plan Created", newCompanyPlan);
+
+      if (!newCompanyPlan) {
+        return apiError(res, 500, "Failed to create Company Plan");
+      }
+
+      const mockCompanyModules = planDoc.modules.map((module) => ({
+        company: company,
+        module: module,
+        startDate,
+        endDate,
+        duration,
+        status: newCompanyPlan.status,
+      }));
+
+      const newCompanyModules = await CompanyModule.insertMany(
+        mockCompanyModules,
+        { session }
+      );
+
+      console.log("New Company Modules Created", newCompanyModules);
+
+      await session.commitTransaction();
+      session.endSession();
+
       return apiResponse(
         res,
         201,

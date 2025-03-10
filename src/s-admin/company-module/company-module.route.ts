@@ -14,7 +14,6 @@ import {
 
 const router = express.Router();
 
-// Create a new company module
 router.post(
   "/",
   validateCreateCompanyModule,
