@@ -59,10 +59,16 @@ export const createCompanyModule = async (req: Request, res: Response) => {
       const endDate = new Date(startDate);
       endDate.setDate(endDate.getDate() + duration);
 
-      const newCompanyModule = await CompanyModule.create(
+      console.log(
+        "checkingnsdlkfjsldkf lskdjf lksdj flksdj flksdjf",
+        company,
+        module
+      );
+
+      const [newCompanyModule] = await CompanyModule.create(
         {
-          company,
-          module,
+          company: company,
+          module: module,
           startDate,
           endDate,
           duration,

@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface IPlan extends Document {
+  _id: Types.ObjectId;
   title: string;
   subTitle?: string;
   modules: Types.ObjectId[];

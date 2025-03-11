@@ -17,26 +17,26 @@ const ModuleBillingSchema: Schema = new Schema(
     company: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
-      required: true,
+      // required: true,
     },
     module: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Module",
-      required: true,
+      // required: true,
     },
     amount: {
       type: Number,
-      required: true,
+      // required: true,
     },
     currency: { type: String, default: "RS" },
     paymentMethod: {
       type: String,
       enum: ["esewa", "bankTransfer", "manual"],
-      required: true,
+      // required: true,
     },
     transactionId: {
       type: String,
-      required: true,
+      // required: true,
     },
     status: {
       type: String,

@@ -14,8 +14,7 @@ export const validateCompanyPlan = [
     .withMessage("Invalid Plan ID format"),
 
   body("startDate")
-    .notEmpty()
-    .withMessage("Start date is required")
+    .optional()
     .isISO8601()
     .toDate()
     .withMessage("Start date must be a valid date"),

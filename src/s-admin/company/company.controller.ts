@@ -22,7 +22,7 @@ export const createCompany = async (req: Request, res: Response) => {
 
 export const getAllCompanies = async (req: Request, res: Response) => {
   try {
-    const companies = await Company.find().populate("plan");
+    const companies = await Company.find();
     return apiResponse(res, 200, "Companies retrieved successfully", companies);
   } catch (error) {
     return apiError(res, 500, "Error fetching companies", error);
@@ -31,7 +31,7 @@ export const getAllCompanies = async (req: Request, res: Response) => {
 
 export const getCompanyById = async (req: Request, res: Response) => {
   try {
-    const company = await Company.findById(req.params.id).populate("plan");
+    const company = await Company.findById(req.params.id);
     if (!company) {
       return apiError(res, 404, "Company not found");
     }

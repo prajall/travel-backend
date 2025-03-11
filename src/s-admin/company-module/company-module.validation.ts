@@ -34,20 +34,26 @@ export const validateCreateCompanyModule = [
 ];
 
 export const validateUpdateCompanyModule = [
-  body("company").isMongoId().withMessage("Invalid company ID format"),
-  body("module").isMongoId().withMessage("Invalid module ID format"),
+  body("company")
+    .optional()
+    .isMongoId()
+    .withMessage("Invalid company ID format"),
+  body("module").optional().isMongoId().withMessage("Invalid module ID format"),
   body("startDate")
     .optional()
     .isISO8601()
     .toDate()
     .withMessage("Invalid start date format"),
   body("duration")
+    .optional()
     .isInt({ min: 1 })
     .withMessage("Duration must be a positive integer"),
   body("paidAmount")
+    .optional()
     .isFloat({ gt: 0 })
     .withMessage("Paid amount must be a positive number"),
   body("transactionId")
+    .optional()
     .isString()
     .withMessage("Transaction ID must be a string"),
 ];
