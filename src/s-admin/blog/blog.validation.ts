@@ -1,8 +1,5 @@
 import { body, param, query } from "express-validator";
 
-/**
- * 🔥 Validation for Creating a Blog
- */
 export const validateCreateBlog = [
   body("title")
     .notEmpty()
@@ -45,9 +42,6 @@ export const validateCreateBlog = [
     .withMessage("Status must be 'draft', 'published', or 'archived'"),
 ];
 
-/**
- * 🔥 Validation for Updating a Blog
- */
 export const validateUpdateBlog = [
   param("id").isMongoId().withMessage("Invalid blog ID"),
 
@@ -86,16 +80,10 @@ export const validateUpdateBlog = [
     .withMessage("Status must be 'draft', 'published', or 'archived'"),
 ];
 
-/**
- * 🔥 Validation for Checking Blog ID in Params
- */
 export const validateBlogId = [
   param("id").isMongoId().withMessage("Invalid blog ID"),
 ];
 
-/**
- * 🔥 Validation for Query Parameters (Filters & Pagination)
- */
 export const validateBlogQueryParams = [
   query("category")
     .optional()

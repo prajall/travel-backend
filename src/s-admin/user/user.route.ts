@@ -8,7 +8,7 @@ router.post("/login", loginUser);
 router.get("/info", authValidation, (req: Request, res: Response) => {
   getUserInfo(req, res);
 });
-router.post("/signup", signupUser);
+// router.post("/signup", signupUser);
 
 // router.post("/login", login);
 
