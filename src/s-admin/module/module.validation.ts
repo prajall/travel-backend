@@ -12,7 +12,7 @@ export const validateModule = [
     .isString()
     .withMessage("Description must be a string"),
 
-  body("type")
+  body("moduleType")
     .notEmpty()
     .withMessage("Module type is required")
     .isIn(["free", "premium"])

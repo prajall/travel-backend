@@ -17,19 +17,17 @@ describe("Plan API Endpoints", () => {
   });
 
   it("should create a new plan plan", async () => {
-    const res = await request(app)
-      .post("/s-admin/plan")
-      .send({
-        title: "Pro Plan",
-        subTitle: "Advanced features for professionals",
-        modules: ["analytics", "email automation"],
-        planType: "monthly",
-        price: 29.99,
-        discount: 10,
-        isFreeTrialEnabled: true,
-        freeTrialDuration: 14,
-        isActive: true,
-      });
+    const res = await request(app).post("/s-admin/plan").send({
+      title: "Pro Plan 2",
+      subTitle: "Advanced features for professionals",
+      modules: [],
+      planType: "monthly",
+      price: 29.99,
+      discount: 10,
+      isFreeTrialEnabled: true,
+      freeTrialDuration: 14,
+      isActive: true,
+    });
 
     expect(res.statusCode).toBe(201);
     expect(res.body.success).toBe(true);

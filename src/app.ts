@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import prometheus from "prom-client";
 
 import companyRoutes from "./s-admin/company/company.route.ts";
 import userRoutes from "./s-admin/user/user.route.ts";
@@ -14,6 +15,17 @@ import blogCategoryRoutes from "./s-admin/blog-category/blog-category.route.ts";
 import companyUrlRoutes from "./s-admin/company-url/company-url.route.ts";
 
 const app = express();
+
+//prometheus
+
+const collectDefaultMetrics = prometheus.collectDefaultMetrics;
+collectDefaultMetrics({ register: prometheus.register });
+
+app.get("/metrics", async (req, res) => {
+  res.setHeader("Content-Type", prometheus.register.contentType);
+  const metrics = await prometheus.register.metrics();
+  res.send(metrics);
+});
 
 //middleware
 app.use(express.json());

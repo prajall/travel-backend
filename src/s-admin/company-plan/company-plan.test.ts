@@ -10,7 +10,6 @@ let companyId: string;
 let planId: string;
 let companyPlanId: string;
 
-/** ✅ Setup Test Database */
 beforeAll(async () => {
   await mongoose.connect(
     "mongodb://admin:Clfa4ace7d+++.msoft@202.51.83.89:27017/travel?authSource=admin"
@@ -19,7 +18,7 @@ beforeAll(async () => {
   // Create test company & plan
   const company = await Company.create({
     name: "Test Company",
-    email: "company7@example.com",
+    email: "company10example.com",
   });
   companyId = company._id.toString();
 
@@ -39,8 +38,9 @@ beforeAll(async () => {
   console.log("Company & Plan Created", company, plan);
 });
 
-/** ❌ Cleanup After Tests */
 afterAll(async () => {
+  await Company.findByIdAndDelete(companyId);
+  await Plan.findByIdAndDelete(planId);
   await mongoose.disconnect();
 });
 

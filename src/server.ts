@@ -1,7 +1,7 @@
 import app from "./app.ts";
 import { connectDB, disconnectDB } from "./db/db.ts";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 const startServer = async () => {
   try {

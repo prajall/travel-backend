@@ -37,7 +37,10 @@ const BlogSchema: Schema = new Schema(
       ref: "User",
       required: true,
     },
-    slug: { type: String, unique: true },
+    slug: {
+      type: String,
+      unique: true,
+    },
 
     status: {
       type: String,

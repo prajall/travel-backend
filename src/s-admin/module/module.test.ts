@@ -20,9 +20,9 @@ describe("Module API Endpoints", () => {
   /** CREATE MODULE */
   it("should create a new module", async () => {
     const res = await request(app).post("/s-admin/module").send({
-      name: "Advanced Analytics",
+      name: "Advanced Analytics 2",
       description: "AI-powered insights",
-      type: "premium",
+      moduleType: "premium",
       price: 49.99,
       pricingType: "monthly",
       isActive: true,

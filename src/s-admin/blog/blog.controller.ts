@@ -12,7 +12,6 @@ export const createBlog = async (req: Request, res: Response) => {
       featuredImage,
       category,
       parentCategory,
-      author,
       status,
     } = req.body;
 
@@ -23,7 +22,7 @@ export const createBlog = async (req: Request, res: Response) => {
     let existingSlug = await Blog.findOne({ slug });
 
     if (existingSlug) {
-      slug += `-${Date.now()}`; // Append timestamp if slug is not unique
+      slug += `-${Date.now()}`;
     }
 
     const newBlog = await Blog.create({
@@ -39,8 +38,9 @@ export const createBlog = async (req: Request, res: Response) => {
     });
 
     return apiResponse(res, 201, "Blog created successfully", newBlog);
-  } catch (error) {
-    return apiError(res, 500, "Error creating blog", error);
+  } catch (error: any) {
+    console.log("Error creating Blog: ", error);
+    return apiError(res, 500, "Error creating blog", error.message);
   }
 };
 
@@ -62,8 +62,8 @@ export const getAllBlogs = async (req: Request, res: Response) => {
       .sort({ createdAt: -1 });
 
     return apiResponse(res, 200, "Blogs fetched successfully", blogs);
-  } catch (error) {
-    return apiError(res, 500, "Error fetching blogs", error);
+  } catch (error: any) {
+    return apiError(res, 500, "Error fetching blogs", error.message);
   }
 };
 
@@ -129,9 +129,6 @@ export const updateBlog = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * 🔥 Delete a Blog
- */
 export const deleteBlog = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
